@@ -1,0 +1,10 @@
+.footer {
+  max-width: 1440px;
+  margin: 0 auto;
+  background: var(--background);
+}
+
+.end_footer{
+    max-width: 1440px;
+ margin-top: 1rem;
+}

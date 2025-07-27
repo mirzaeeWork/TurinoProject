@@ -1,0 +1,129 @@
+.stack-gallery {
+  --shift: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+}
+
+.stack-wrapper {
+  position: relative;
+  width: 100%;
+  height: 480px;
+  perspective: 1000px;
+  overflow: visible;
+}
+
+.stack-card {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform-origin: center center;
+  transform: translateX(-50%);
+  height: 100%;
+  width: 65%;
+  object-fit: cover;
+  border-radius: 35px;
+  transition: transform 0.6s ease, left 0.6s ease, z-index 0.3s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.stack-buttons {
+  margin-top: 30px;
+  display: flex;
+  gap: 30px;
+  align-items: center;
+}
+
+.stack-buttons button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.stack-buttons button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.stack-buttons button svg {
+  width: 36px;
+  height: 36px;
+}
+
+
+/* ✅ Tablet (640px–1023px): smaller shift and tighter layout */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .stack-gallery {
+    width: 60%;
+    --shift: 40px;
+  }
+
+  .stack-wrapper {
+    height: 350px;
+  }
+
+  .stack-card {
+    width: 60%;
+  }
+
+  .stack-buttons button svg {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+/* ✅ Mobile (max-width: 640px) */
+@media (max-width: 639px) {
+  .stack-gallery {
+    width: 60%;
+  }
+
+  .stack-wrapper {
+    height: 300px;
+  }
+
+  .stack-card {
+    width: 85%;
+  }
+
+  .stack-buttons {
+    gap: 20px;
+  }
+
+  .stack-buttons button svg {
+    width: 26px;
+    height: 26px;
+  }
+}
+
+/* ✅ Small mobile (max-width: 480px) */
+@media (max-width: 480px) {
+  .stack-gallery {
+    width: 80%;
+    --shift: 40px;
+  }
+
+  .stack-wrapper {
+    width: 70%;
+    height: 280px;
+  }
+
+  .stack-card {
+    width: 100%;
+  }
+
+  .stack-buttons button svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+/* ✅ Very small screens */
+@media (max-width: 360px) {
+  .stack-gallery {
+    --shift: 33.5px;
+  }
+}

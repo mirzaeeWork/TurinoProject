@@ -1,0 +1,66 @@
+:root {
+  --rmdp-primary-green: #28a745;
+  --rmdp-secondary-green: #87ad92;
+  --rmdp-shadow-green: #87ad92;
+  --rmdp-today-green: #33c773;
+  --rmdp-hover-green: #238636;
+  --rmdp-deselect-green: #28a745;
+}
+
+.ep-arrow,
+.rmdp-ep-arrow,
+.rmdp-ep-shadow {
+  display: none !important;
+}
+
+.DatePicker {
+  position: relative;
+}
+
+.DatePicker .rmdp-wrapper {
+  position: absolute;
+  top: 15px;
+  left: -50%;
+  transform: translateX(-50%);
+}
+
+.DatePicker.top-default .rmdp-wrapper {
+  position: absolute;
+  top: 15px;
+  left: -50%;
+  transform: translateX(-50%);
+}
+
+.DatePicker.top-small .rmdp-wrapper {
+  position: absolute;
+  top: 5px;
+  left: -50%;
+  transform: translateX(-50%);
+}
+
+.DatePicker .rmdp-shadow {
+  box-shadow: 0 4px 6px 2px rgba(0, 0, 0, 0.1),
+    0 2px 4px -2px rgba(0, 0, 0, 0.1);
+}
+
+.green .rmdp-day.rmdp-disabled:not(.rmdp-day-hidden) span:hover {
+  background-color: transparent !important;
+}
+
+@media screen and (max-width: 639px) {
+  .DatePicker.top-default .rmdp-wrapper {
+    position: absolute;
+    top: 5px;
+    left: -50%;
+    transform: translateX(-53%);
+  }
+}
+
+@media screen and (max-width: 449px) {
+  .DatePicker.top-default .rmdp-wrapper {
+    position: absolute;
+    top: 5px;
+    left: -50%;
+    transform: translateX(-50%);
+  }
+}
