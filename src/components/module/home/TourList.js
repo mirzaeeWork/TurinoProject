@@ -1,7 +1,7 @@
 import Card from "@/components/element/Card";
 import Loading from "@/components/element/Loading";
 
-function TourList({ allTours, isPending }) {
+function TourList({ allTours, isPending,oneLoading}) {
 
   return (
     <div className="max-w-[1188px] mx-auto px-[1rem] xl:px-0 pt-20">

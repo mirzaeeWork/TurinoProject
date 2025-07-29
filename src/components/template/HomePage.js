@@ -6,8 +6,9 @@ import TravelSearchBox from "../module/home/TravelSearchBox";
 import PhoneOrderBanner from "../module/home/PhoneOrderBanner";
 import useDynamicQuery from "@/hooks/useDynamicQuery";
 
-function HomePage({allTours,setAllTours}) {
-    const { mutate, isPending } = useDynamicQuery({
+function HomePage({ allTours, setAllTours,CITY_LIST,DESTINATION_LIST }) {
+
+  const { mutate, isPending } = useDynamicQuery({
     mode: "mutation",
     method: "get",
     url: "/tour",
@@ -28,10 +29,15 @@ function HomePage({allTours,setAllTours}) {
           <span className="text-(--color-link)">تورینو</span> برگزار کننده
           بهترین تور های داخلی و خارجی
         </h1>
-        <TravelSearchBox setAllTours={setAllTours} mutate={mutate} isPending={isPending}/>
-        <TourList allTours={allTours} isPending={isPending}/>
+        <TravelSearchBox
+          setAllTours={setAllTours}
+          mutate={mutate}
+          isPending={isPending}
+          CITY_LIST={CITY_LIST} DESTINATION_LIST={DESTINATION_LIST}
+        />
+        <TourList allTours={allTours} isPending={isPending} />
         <PhoneOrderBanner />
-        <WhyTorino/>
+        <WhyTorino />
       </div>
     </>
   );

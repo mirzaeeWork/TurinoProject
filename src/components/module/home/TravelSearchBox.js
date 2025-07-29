@@ -6,7 +6,6 @@ import { IoLocationOutline } from "react-icons/io5";
 import { TbWorldSearch } from "react-icons/tb";
 import { toast } from "react-toastify";
 import { formatDate, isAfterDay } from "@/utils/formatDate";
-import useDynamicQuery from "@/hooks/useDynamicQuery";
 import { useRouter } from "next/router";
 import { DateObject } from "react-multi-date-picker";
 import ButtonElement from "@/components/element/ButtonElement";
@@ -18,23 +17,17 @@ const initialFormState = {
   toDate: null,
 };
 
-function TravelSearchBox({ setAllTours, mutate, isPending }) {
+function TravelSearchBox({
+  setAllTours,
+  mutate,
+  isPending,
+  CITY_LIST,
+  DESTINATION_LIST,
+}) {
+    const [oneLoading, setOneLoading] = useState(false);
+
   const [formState, setFormState] = useState(initialFormState);
-  const [oneLoading,setOneLoading]=useState(false)
   const router = useRouter();
-
-  const { data: CITY_LIST, isLoading: isLoading_CITY } = useDynamicQuery({
-    mode: "query",
-    url: `/cities/origins?faName=${formState.selectedOrigin}`,
-    queryKey: ["cities", "origins"],
-  });
-
-  const { data: DESTINATION_LIST, isLoading: isLoading_DESTINATION } =
-    useDynamicQuery({
-      mode: "query",
-      url: `/cities/destinations?faName=${formState.selectedOrigin}`,
-      queryKey: ["cities", "destinations"],
-    });
 
   useEffect(() => {
     const { originId, destinationId, startDate, endDate } = router?.query;
@@ -53,14 +46,15 @@ function TravelSearchBox({ setAllTours, mutate, isPending }) {
       fromDate: startDate ? new DateObject(startDate) : null,
       toDate: endDate ? new DateObject(endDate) : null,
     }));
-
-    handleSearchWithoutPush({
-      originId,
-      destinationId,
-      startDate,
-      endDate,
-    });
-  }, [router.query, CITY_LIST, DESTINATION_LIST]);
+    if (oneLoading) {
+      handleSearchWithoutPush({
+        originId,
+        destinationId,
+        startDate,
+        endDate,
+      });
+    }
+  }, [router.query]);
 
   const updateCitySelection = (type, city) => {
     const selectedOrigin = type === "origin" ? city : formState.selectedOrigin;
@@ -133,7 +127,7 @@ function TravelSearchBox({ setAllTours, mutate, isPending }) {
 
   const handleSearchWithoutPush = (query) => {
     mutate(query, {
-      onSuccess: (data) =>  setAllTours(data),
+      onSuccess: (data) => setAllTours(data),
       onError: (error) => {
         const text =
           error?.response?.data?.message === "Access token required"
@@ -146,14 +140,16 @@ function TravelSearchBox({ setAllTours, mutate, isPending }) {
 
   const handleSearch = () => {
     if (!validateForm()) return;
-    setOneLoading(true)
+    setOneLoading(true);
 
     const { selectedOrigin, selectedDestination, fromDate, toDate } = formState;
     // console.log({ selectedOrigin, selectedDestination, fromDate, toDate });
 
     const query = {
       ...(selectedOrigin?._id && { originId: selectedOrigin._id }),
-      ...(selectedDestination?._id && { destinationId: selectedDestination._id }),
+      ...(selectedDestination?._id && {
+        destinationId: selectedDestination._id,
+      }),
       ...(fromDate && { startDate: formatDate(fromDate) }),
       ...(toDate && { endDate: formatDate(toDate) }),
     };
@@ -213,7 +209,7 @@ function TravelSearchBox({ setAllTours, mutate, isPending }) {
           onClick={handleSearch}
           isPending={isPending && oneLoading}
           text="جستجو"
-        />        
+        />
       </div>
     </section>
   );
