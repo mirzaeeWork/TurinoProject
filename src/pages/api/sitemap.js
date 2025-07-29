@@ -1,7 +1,9 @@
 // src/pages/api/sitemap.js
 
-const SITE_URL = process.env.SITE_URL || "http://localhost:3000";
-const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:6500";
+import { getFilteredTours } from "@/utils/crudModels/Tour";
+import connectDB from "@/utils/connectDB";
+
+const SITE_URL = "https://turino-project.vercel.app";
 
 function generateSiteMap(tours) {
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -35,7 +37,7 @@ function generateSiteMap(tours) {
       const lastmod = tour.updatedAt || tour.createdAt || new Date().toISOString();
       return `
   <url>
-    <loc>${SITE_URL}/tour-detail/${tour.id}</loc>
+    <loc>${SITE_URL}/tour-detail/${tour._id}</loc>
     <lastmod>${new Date(lastmod).toISOString()}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -48,8 +50,10 @@ function generateSiteMap(tours) {
 
 export default async function handler(req, res) {
   try {
-    const response = await fetch(`${API_URL}/tour`);
-    const tours = await response.json();
+        await connectDB();
+
+    let tours = await getFilteredTours(req.query);
+
 
     const sitemap = generateSiteMap(tours);
 
