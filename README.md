@@ -43,7 +43,7 @@ npm run dev
 اسکرین‌شات یا ویدیو از پروژه بذار یا لینک بده به نسخه‌ی آنلاین.
 
 دموی پروژه:  
-[مشاهده آنلاین](https://your-demo-link.com)
+[مشاهده آنلاین](https://turino-project.vercel.app/)
 
 
 ---
